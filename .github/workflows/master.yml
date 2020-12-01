@@ -1,0 +1,35 @@
+name: master-actions
+on:
+  push:
+    branches: [master]
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check repos
+        uses: actions/checkout@v2
+      - name: set jdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - name: cach maven
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+ DockerHub:
+   name: push docker img naar docker hub
+   run_tests:
+     runs-on: ubuntu-latest
+     steps:
+       - name: check repo
+         uses: actions/checkout@v2
+       - name: push naar hub
+         uses: docker/build-push-action@v1
+         with:
+           username: ${{secrets.DOCKER_USERNAME}}
+           password: ${{secrets.DOCKER_PASSWORD}}
+           repository: mpschool/bslabo6
+           tags: latest
+           tag_with_ref: true
+           
