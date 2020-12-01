@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: controleer repositories
         uses: actions/checkout@v2
-      - name: set right jdk
+      - name: setup the jdk
         uses: actions/setup-java@v1
         with:
           java-version: 8
