@@ -2,6 +2,8 @@ name: master-actions
 on:
   push:
     branches: [ master ]
+    tags:
+      - v*
   pull_request:
     branches: [ master ]
 jobs:
@@ -19,6 +21,14 @@ jobs:
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+      - uses: actions/checkout@master
+      - name: Maak release
+        uses: elgohr/Github-Release-Action@master
+        env:
+           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          args: ${{ github.sha }}
+
   DockerHub:
    name: img --> dockerhub
    runs-on: ubuntu-latest
@@ -33,3 +43,4 @@ jobs:
            repository: eliasbd2000/bs2_labo6
            tags: latest
            tag_with_ref: true
+   
