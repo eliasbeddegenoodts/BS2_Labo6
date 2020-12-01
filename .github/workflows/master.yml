@@ -42,7 +42,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: push tag
         id: tag_version
-        uses: eliasbeddegenoodts/BS2_Labo6@v2
+        uses: eliasbeddegenoodts/action-automatic-releases@latest
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create release
