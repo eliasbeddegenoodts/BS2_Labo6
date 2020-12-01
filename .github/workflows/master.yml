@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
       - uses: actions/checkout@master
       - name: Maak release
-        uses: elgohr/Github-Release-Action@master
+        uses: eliasbeddegenoodts/BS2_Labo6@master
         env:
            GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
