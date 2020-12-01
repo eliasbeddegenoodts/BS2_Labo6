@@ -2,6 +2,8 @@ name: master-actions
 on:
   push:
     branches: [master]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ master ]
 jobs:
@@ -34,22 +36,24 @@ jobs:
            repository: eliasbd2000/bs2_labo6
            tags: latest
            tag_with_ref: true
-           
-           
-  release:
+  build:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create release
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ steps.tag_version.outputs.new_tag }}
-          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }} 
+          tag_name: ${{ GITHUB.RUN_NUMBER }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+   
