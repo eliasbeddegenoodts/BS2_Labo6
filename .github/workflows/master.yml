@@ -49,5 +49,9 @@ jobs:
         with:
           tag_name: ${{ GITHUB.RUN_NUMBER }}
           release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
           draft: false
           prerelease: false
