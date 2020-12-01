@@ -20,8 +20,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}      
-        
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
   DockerHub:
    name: img --> dockerhub
    runs-on: ubuntu-latest
