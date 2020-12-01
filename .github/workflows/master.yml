@@ -23,11 +23,13 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
       - uses: actions/checkout@master
       - name: Maak release
-        uses: eliasbeddegenoodts/BS2_Labo6@master
+        uses: actions/create-release@v1
         env:
-           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: ${{ github.sha }}
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
 
   DockerHub:
    name: img --> dockerhub
